@@ -1,0 +1,131 @@
+{
+  "latex-workshop.latex.autoBuild.run": "onSave",
+  "latex-workshop.latex.outDir": "%DIR%",
+  "latex-workshop.latex.recipe.default": "first",
+  "latex-workshop.latex.recipes": [
+    {
+      "name": "SIAM: article + supplement (pdfLaTeX / BibTeX)",
+      "tools": [
+        "article",
+        "supplement",
+        "article",
+        "supplement"
+      ]
+    },
+    {
+      "name": "latexmk: current root (pdfLaTeX / BibTeX)",
+      "tools": [
+        "current-root"
+      ]
+    }
+  ],
+  "latex-workshop.latex.tools": [
+    {
+      "name": "article",
+      "command": "/Library/TeX/texbin/latexmk",
+      "args": [
+        "-pdf",
+        "-synctex=1",
+        "-interaction=nonstopmode",
+        "-file-line-error",
+        "-halt-on-error",
+        "-outdir=%DIR%",
+        "%DIR%/ex_article.tex"
+      ],
+      "env": {
+        "PATH": "/Library/TeX/texbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+      }
+    },
+    {
+      "name": "supplement",
+      "command": "/Library/TeX/texbin/latexmk",
+      "args": [
+        "-pdf",
+        "-synctex=1",
+        "-interaction=nonstopmode",
+        "-file-line-error",
+        "-halt-on-error",
+        "-outdir=%DIR%",
+        "%DIR%/ex_supplement.tex"
+      ],
+      "env": {
+        "PATH": "/Library/TeX/texbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+      }
+    },
+    {
+      "name": "current-root",
+      "command": "/Library/TeX/texbin/latexmk",
+      "args": [
+        "-pdf",
+        "-synctex=1",
+        "-interaction=nonstopmode",
+        "-file-line-error",
+        "-halt-on-error",
+        "-outdir=%DIR%",
+        "%DOC%"
+      ],
+      "env": {
+        "PATH": "/Library/TeX/texbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+      }
+    }
+  ],
+  "latex-workshop.view.pdf.viewer": "external",
+  "latex-workshop.view.pdf.external.viewer.command": "/Applications/Skim.app/Contents/SharedSupport/displayline",
+  "latex-workshop.view.pdf.external.viewer.args": [
+    "0",
+    "%PDF%"
+  ],
+  "latex-workshop.view.pdf.external.synctex.command": "/Applications/Skim.app/Contents/SharedSupport/displayline",
+  "latex-workshop.view.pdf.external.synctex.args": [
+    "-r",
+    "-b",
+    "%LINE%",
+    "%PDF%",
+    "%TEX%"
+  ],
+  "latex-workshop.synctex.afterBuild.enabled": true,
+  "latex-workshop.latex.autoClean.run": "onSucceeded",
+  "latex-workshop.latex.clean.method": "glob",
+  "latex-workshop.latex.clean.subfolder.enabled": false,
+  "latex-workshop.latex.clean.fileTypes": [
+    "ex_article.aux",
+    "ex_article.bbl",
+    "ex_article.blg",
+    "ex_article.fdb_latexmk",
+    "ex_article.fls",
+    "ex_article.log",
+    "ex_article.out",
+    "ex_article.thm",
+    "ex_article.toc",
+    "ex_article.lof",
+    "ex_article.lot",
+    "ex_article.synctex(busy)",
+    "ex_article.synctex.gz(busy)",
+    "ex_supplement.aux",
+    "ex_supplement.bbl",
+    "ex_supplement.blg",
+    "ex_supplement.fdb_latexmk",
+    "ex_supplement.fls",
+    "ex_supplement.log",
+    "ex_supplement.out",
+    "ex_supplement.thm",
+    "ex_supplement.toc",
+    "ex_supplement.lof",
+    "ex_supplement.lot",
+    "ex_supplement.synctex(busy)",
+    "ex_supplement.synctex.gz(busy)",
+    "%DOCFILE%.aux",
+    "%DOCFILE%.bbl",
+    "%DOCFILE%.blg",
+    "%DOCFILE%.fdb_latexmk",
+    "%DOCFILE%.fls",
+    "%DOCFILE%.log",
+    "%DOCFILE%.out",
+    "%DOCFILE%.thm",
+    "%DOCFILE%.toc",
+    "%DOCFILE%.lof",
+    "%DOCFILE%.lot",
+    "%DOCFILE%.synctex(busy)",
+    "%DOCFILE%.synctex.gz(busy)"
+  ]
+}

@@ -1,0 +1,21 @@
+# macOS
+.DS_Store
+
+# LaTeX build artifacts
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.thm
+*.toc
+*.lof
+*.lot
+*.synctex.gz
+*.synctex(busy)
+*.synctex.gz(busy)
+*-eps-converted-to.pdf
+/ex_article.pdf
+/ex_supplement.pdf

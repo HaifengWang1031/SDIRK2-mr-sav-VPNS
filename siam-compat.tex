@@ -1,0 +1,8 @@
+% Preserve modern LaTeX reference commands before the legacy SIAM class loads.
+% Load this file BEFORE \\documentclass; remove when upgrading the SIAM class.
+\let\SIAMkernelLabel\label
+\let\SIAMkernelRefstepcounter\refstepcounter
+\AddToHook{package/hyperref/before}{%
+  \let\label\SIAMkernelLabel
+  \let\refstepcounter\SIAMkernelRefstepcounter
+}

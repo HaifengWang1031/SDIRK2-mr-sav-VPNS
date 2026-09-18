@@ -1,0 +1,1457 @@
+% SIAM Article Template
+\input{siam-compat}
+\documentclass[review,hidelinks,onefignum,onetabnum]{siamart220329}
+
+% Information that is shared between the article and the supplement
+% (title and author information, macros, packages, etc.) goes into
+% ex_shared.tex. If there is no supplement, this file can be included
+% directly.
+
+\input{ex_shared}
+
+% Optional PDF information
+\ifpdf
+\hypersetup{
+  pdftitle={An Example Article},
+  pdfauthor={D. Doe, P. T. Frank, and J. E. Smith}
+}
+\fi
+
+% The next statement enables references to information in the
+% supplement. See the xr-hyperref package for details.
+
+\externaldocument[][nocite]{ex_supplement}
+
+% FundRef data to be entered by SIAM
+%<funding-group specific-use="FundRef">
+%<award-group>
+%<funding-source>
+%<named-content content-type="funder-name"> 
+%</named-content> 
+%<named-content content-type="funder-identifier"> 
+%</named-content>
+%</funding-source>
+%<award-id> </award-id>
+%</award-group>
+%</funding-group>
+
+\begin{document}
+
+\maketitle
+
+% REQUIRED
+\begin{abstract}
+This is an example SIAM \LaTeX\ article. This can be used as a
+template for new articles.  Abstracts must be able to stand alone
+and so cannot contain citations to the paper's references,
+equations, etc.  An abstract must consist of a single paragraph and
+be concise. Because of online formatting, abstracts must appear as
+plain as possible. Any equations should be inline.
+\end{abstract}
+
+% REQUIRED
+\begin{keywords}
+example, \LaTeX
+\end{keywords}
+
+% REQUIRED
+\begin{MSCcodes}
+68Q25, 68R10, 68U05
+\end{MSCcodes}
+
+\section{Introduction}
+
+Let $\Omega\subset\mathbb R^2$ be a bounded connected domain with a
+$C^2$ boundary, and let $\nu>0$. We consider the incompressible
+Navier--Stokes equations (NSE)
+\begin{equation}\label{eq:nse}
+\begin{aligned}
+ u_t-\nu\Delta u+(u\cdot\nabla)u+\nabla p&=f
+ &&\text{in }\Omega\times(0,\infty),\\
+ \nabla\cdot u&=0
+ &&\text{in }\Omega\times(0,\infty),\\
+ u&=0 &&\text{on }\partial\Omega\times(0,\infty),\\
+ u(\cdot,0)&=u_0 &&\text{in }\Omega.
+\end{aligned}
+\end{equation}
+The pressure is normalized by $\int_\Omega p\,dx=0$.
+
+\subsection{Functional setting and uniform-in-time bounds}
+\label{sec:functional-setting}
+
+Define $\mathcal V=\{v\in C_c^\infty(\Omega)^2:\nabla\cdot v=0\}$.
+Set
+\[
+ H=\overline{\mathcal V}^{\,L^2(\Omega)^2},
+ \qquad V=H_0^1(\Omega)^2\cap H.
+\]
+We write $(\cdot,\cdot)$ and $|\cdot|$ for the $L^2$ inner product and
+norm, and equip $V$ with the norm $\|v\|=|\nabla v|$.
+The pairing between $V'$ and $V$ is denoted by $\langle\cdot,\cdot\rangle$.
+Thus $V\subset H\equiv H'\subset V'$. The full homogeneous velocity
+trace is imposed in $V$; membership in $H$ alone does not impose a
+zero tangential trace. We also use
+$L_0^2(\Omega)=\{q\in L^2(\Omega):\int_\Omega q\,dx=0\}$.
+
+Let $P:L^2(\Omega)^2\to H$ be the orthogonal Leray projection.
+The Stokes operator and its domain are
+\[
+ A=-P\Delta,\qquad D(A)=H^2(\Omega)^2\cap V.
+\]
+Its extension from $V$ to $V'$ is defined by
+$\langle Au,v\rangle=(\nabla u,\nabla v)$.
+Writing $\lambda_1>0$ for its first eigenvalue, we have
+\begin{equation}\label{eq:stokes-estimates}
+ \lambda_1|v|^2\le\|v\|^2\quad(v\in V),\qquad
+ \|v\|_{H^2}\le C|Av|\quad(v\in D(A)).
+\end{equation}
+Here and below, $C$ denotes a positive constant depending only on the
+fixed domain unless further dependencies are indicated; its value may
+change between occurrences.
+
+For $u,v,w\in V$, define
+\[
+ b(u,v,w)=\int_\Omega (u\cdot\nabla)v\cdot w\,dx,
+ \qquad \langle B(u,v),w\rangle=b(u,v,w).
+\]
+Integration by parts gives
+\begin{equation}\label{eq:skew-symmetry}
+ b(u,v,w)=-b(u,w,v),\qquad b(u,v,v)=0.
+\end{equation}
+The two-dimensional interpolation inequalities and Stokes regularity
+also give
+\begin{align}
+ |b(u,v,w)|&\le C|u|^{1/2}\|u\|^{1/2}\|v\|
+                      |w|^{1/2}\|w\|^{1/2},
+ &&u,v,w\in V,\label{eq:trilinear-v}\\
+ |b(u,v,w)|&\le C|u|^{1/2}|Au|^{1/2}\|v\||w|,
+ &&u\in D(A),\ v\in V,\ w\in H.\label{eq:trilinear-a}
+\end{align}
+In the second estimate, the integral defining $b$ extends to the stated
+spaces. In particular, $B:V\times V\to V'$ is well defined, and
+$B(u,v)=P((u\cdot\nabla)v)$ whenever the convective term belongs to
+$L^2(\Omega)^2$. This does not imply that $B(u,v)$ belongs to $V$.
+These are the standard no-slip functional setting and estimates; see,
+for example, \cite[section~1]{ToneWirosoetisno2006}.
+
+Throughout this section, assume
+\begin{equation}\label{eq:continuous-data}
+ u_0\in V,\qquad f\in L^\infty(0,\infty;L^2(\Omega)^2),\qquad
+ F=Pf,\qquad F_* =\operatorname*{ess\,sup}_{t\ge0}|F(t)|.
+\end{equation}
+Applying $P$ to \cref{eq:nse} gives
+\begin{equation}\label{eq:projected-nse}
+ u_t+\nu Au+B(u,u)=F,\qquad u(0)=u_0.
+\end{equation}
+The unique two-dimensional strong solution belongs to
+$C([0,T];V)\cap L^2(0,T;D(A))$, with $u_t\in L^2(0,T;H)$,
+for every finite $T>0$, and satisfies the kinetic energy identity
+\begin{equation}\label{eq:nse-energy}
+ \frac12\frac{d}{dt}|u|^2+\nu\|u\|^2=(F,u).
+\end{equation}
+We recall the classical uniform-in-time bounds below; see
+\cite[section~1, equations~(1.6)--(1.8)]{ToneWirosoetisno2006}.
+The accompanying time-window estimate follows from the energy balance.
+We state these results without proof, keeping their dependence on the
+initial data explicit.
+
+\begin{proposition}[Uniform bounds for the NSE]\label{prop:nse-bounds}
+Under \cref{eq:continuous-data}, the solution of
+\cref{eq:projected-nse} satisfies, for $t\ge0$,
+\begin{equation}\label{eq:nse-l2-bound}
+ |u(t)|^2\le e^{-\nu\lambda_1t}|u_0|^2
+ +\frac{F_*^2}{\nu^2\lambda_1^2}
+       (1-e^{-\nu\lambda_1t}).
+\end{equation}
+For every fixed $\ell>0$ and every $t\ge0$,
+\begin{equation}\label{eq:nse-h1-window}
+ \nu\int_t^{t+\ell}\|u(s)\|^2\,ds
+ \le |u(t)|^2+\frac{\ell F_*^2}{\nu\lambda_1}.
+\end{equation}
+Moreover, there exists $K_1=K_1(\nu,\Omega,F_*,\|u_0\|)$ such that
+\begin{equation}\label{eq:nse-h1-bound}
+ \sup_{t\ge0}\|u(t)\|^2\le K_1.
+\end{equation}
+There are radii $R_0,R_1>0$, depending only on $\nu,\Omega,F_*$, and
+an entry time $T_*=T_*(\nu,\Omega,F_*,|u_0|)$ such that
+\begin{equation}\label{eq:nse-absorbing}
+ |u(t)|^2\le R_0^2,\qquad \|u(t)\|^2\le R_1^2,
+ \qquad t\ge T_*.
+\end{equation}
+The entry time can be chosen uniformly for initial data in a bounded
+subset of $H$ that is contained in $V$.
+\end{proposition}
+
+
+\subsection{The mean-reverting ccSAV reformulation}
+\label{sec:mr-ccsav}
+
+The cancellation in \cref{eq:skew-symmetry} underlies the continuous
+energy estimate. In a time discretization with an explicitly evaluated
+convective term, its pairing with the current stage velocity need not
+vanish. To retain an algebraic cancellation for such pairings, introduce
+a scalar variable $r$ and a mean-reversion parameter $\gamma>0$, and set
+\[
+ G_u(r)=1-r^2,\qquad G_r(r)=1+r.
+\]
+The mean-reverting concurrently corrected scalar auxiliary variable
+(mr-ccSAV) system is
+\begin{equation}\label{eq:mr-ccsav}
+\begin{aligned}
+ u_t+\nu Au+(1-r^2)B(u,u)&=F,\\
+ r_t+\gamma r+(1+r)\langle B(u,u),u\rangle&=0,\\
+ u(0)=u_0,\qquad r(0)&=0.
+\end{aligned}
+\end{equation}
+The force remains in the velocity equation and represents physical
+energy input. The scalar correction involves only the convective term.
+
+\begin{proposition}[Equivalence and modified energy identity]
+\label{prop:mr-equivalence}
+Under \cref{eq:continuous-data}, system \cref{eq:mr-ccsav} is equivalent
+to \cref{eq:projected-nse} in the strong-solution class, with $r\equiv0$.
+For
+\begin{equation}\label{eq:modified-energy}
+ \mathcal E(u,r)=\frac12|u|^2+\frac12(r-1)^2,
+\end{equation}
+its solution satisfies
+\begin{equation}\label{eq:mr-energy}
+ \frac{d}{dt}\mathcal E(u,r)+\nu\|u\|^2+\gamma r(r-1)=(F,u),
+\end{equation}
+or, equivalently,
+\begin{equation}\label{eq:mr-energy-shifted}
+ \frac{d}{dt}\mathcal E(u,r)+\nu\|u\|^2
+ +\frac\gamma2\bigl(r^2+(r-1)^2\bigr)
+ =(F,u)+\frac\gamma2.
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+By \cref{eq:skew-symmetry}, the scalar equation reduces to
+$r_t+\gamma r=0$. Its initial condition implies $r(t)=0$, and the
+velocity equation becomes \cref{eq:projected-nse}. Conversely, its
+strong solution together with $r=0$ solves \cref{eq:mr-ccsav}.
+
+For the energy identity, pair the velocity equation with $u$ and
+multiply the scalar equation by $r-1$. Their convective contributions
+cancel because
+\begin{equation}\label{eq:ccsav-cancellation}
+ G_u(r)+(r-1)G_r(r)=(1-r^2)+(r-1)(1+r)=0.
+\end{equation}
+Adding the two equations yields \cref{eq:mr-energy}. The identity
+$2r(r-1)=r^2+(r-1)^2-1$ gives \cref{eq:mr-energy-shifted}.
+\end{proof}
+
+The equilibrium of the auxiliary variable is $r=0$, although its
+contribution to the modified energy is centered at $r=1$. At $r=0$,
+\cref{eq:mr-energy} reduces exactly to the physical energy balance
+\cref{eq:nse-energy}. More generally, the homogeneous scalar equation
+has the decay $r(t)=r(0)e^{-\gamma t}$, which explains the mean-reverting
+term. The velocity correction is quadratic in the deviation from this
+equilibrium: $G_u(r)-1=-r^2$.
+
+The algebraic identity \cref{eq:ccsav-cancellation} remains valid if
+$B(u,u)$ in both equations is replaced by a common explicitly evaluated
+convective term, provided that the same scalar and velocity are used
+in the pairing. This property motivates the concurrent stage
+correction in the SDIRK2 scheme below. It supplies the cancellation
+needed for the discrete energy estimate; the bounds on the numerical
+auxiliary variable and the temporal accuracy require separate analysis.
+
+\section{The SDIRK2-mr-ccSAV scheme and its solvability}
+\label{sec:alg}
+
+In this section, we construct the SDIRK2-mr-ccSAV scheme in incremental
+form. Each stage is reduced to two linear Stokes problems with the
+same operator and a scalar polynomial equation. This reduction yields
+existence for every positive time step and a computable sufficient
+condition for uniqueness.
+
+\subsection{The time-stepping scheme}
+\label{sec:sdirk2-scheme}
+
+Let $0=t_0<t_1<\cdots$ be a time grid, with
+$\tau_n=t_{n+1}-t_n>0$. Set
+\begin{equation}\label{eq:sdirk-parameters}
+ \eta=1-\frac1{\sqrt2},\qquad
+ \delta=1-\frac1{2\eta}=-\frac1{\sqrt2},\qquad
+ (c_0,c_1,c_2)=(0,\eta,1).
+\end{equation}
+The coefficient matrices for the two nontrivial stages of the underlying
+implicit--explicit method are
+\[
+ \mathsf A^{\rm RK}=\begin{pmatrix}\eta&0\\1-\eta&\eta\end{pmatrix},
+ \qquad
+ \widehat{\mathsf A}^{\rm RK}
+ =\begin{pmatrix}\eta&0\\\delta&1-\delta\end{pmatrix}.
+\]
+The implicit columns correspond to stages $1,2$, whereas the explicit
+columns correspond to stages $0,1$. Taking differences of successive
+rows gives the incremental coefficients
+\begin{equation}\label{eq:sdirk-incremental}
+ \mathsf A=(a_{ij})
+ =\begin{pmatrix}\eta&0\\1-2\eta&\eta\end{pmatrix},\qquad
+ \widehat{\mathsf A}=(\widehat a_{ij})
+ =\begin{pmatrix}\eta&0\\-1&1-\delta\end{pmatrix},
+\end{equation}
+where $\delta-\eta=-1$. The concurrent correction below uses the
+current scalar in each incremental stage equation.
+
+Initialize $u^0=u_0$ and $r^0=0$. Given $(u^n,r^n)$, set
+$(u_{n,0},r_{n,0})=(u^n,r^n)$ and write
+$B_{n,j}=B(u_{n,j},u_{n,j})$. Let $F_{n,j}$ denote the prescribed stage
+force. For a continuous force, take $F_{n,j}=F(t_n+c_j\tau_n)$,
+$j=0,1$. If $F$ is given only as an $L^\infty$ equivalence class,
+the stage data must be specified separately, for example by fixing a
+bounded representative; solvability below concerns the actual data
+$F_{n,j}$ used in the scheme.
+
+For $i=1,2$, find $(u_{n,i},r_{n,i})\in V\times\mathbb R$ such that
+\begin{equation}\label{eq:sdirk-mr-scheme}
+\begin{aligned}
+ u_{n,i}-u_{n,i-1}
+ +\nu\tau_n\sum_{j=1}^i a_{ij}Au_{n,j}
+ &=\tau_n\sum_{j=0}^{i-1}\widehat a_{ij}
+       \bigl[F_{n,j}-(1-r_{n,i}^2)B_{n,j}\bigr],\\
+ r_{n,i}-r_{n,i-1}
+ +\gamma\tau_n\sum_{j=1}^i a_{ij}r_{n,j}
+ &=-\tau_n(1+r_{n,i})\sum_{j=0}^{i-1}\widehat a_{ij}
+       \langle B_{n,j},u_{n,i}\rangle.
+\end{aligned}
+\end{equation}
+The first equation is understood in $V'$. The step is completed by
+\begin{equation}\label{eq:sdirk-update}
+ (u^{n+1},r^{n+1})=(u_{n,2},r_{n,2}).
+\end{equation}
+Both correction factors in a given stage use $r_{n,i}$, while the
+convective terms depend only on already computed velocities. Consequently,
+\cref{eq:ccsav-cancellation} applies to the common pairing
+$\sum_{j<i}\widehat a_{ij}\langle B_{n,j},u_{n,i}\rangle$.
+The corrected incremental scheme is not obtained simply by applying
+the displayed Runge--Kutta matrices to the continuous extended system.
+
+\subsection{Reduction to a scalar equation}
+\label{sec:scalar-reduction}
+
+Fix a stage $i$ and regard all preceding stages as known. Define
+\begin{equation}\label{eq:stage-data}
+\begin{aligned}
+ \widetilde B_{n,i}
+ &=\sum_{j=0}^{i-1}\widehat a_{ij}B_{n,j},\\
+ R^u_{n,i}
+ &=u_{n,i-1}-\nu\tau_n\sum_{j=1}^{i-1}a_{ij}Au_{n,j}
+       +\tau_n\sum_{j=0}^{i-1}\widehat a_{ij}F_{n,j},\\
+ R^r_{n,i}
+ &=r_{n,i-1}-\gamma\tau_n\sum_{j=1}^{i-1}a_{ij}r_{n,j}.
+\end{aligned}
+\end{equation}
+Empty sums are zero. In particular, the first-stage data are
+\[
+ \widetilde B_{n,1}=\eta B_{n,0},\qquad
+ R^u_{n,1}=u^n+\eta\tau_nF_{n,0},\qquad R^r_{n,1}=r^n,
+\]
+and the second-stage data are
+\[
+\begin{aligned}
+ \widetilde B_{n,2}&=-B_{n,0}+(1-\delta)B_{n,1},\\
+ R^u_{n,2}&=u_{n,1}-\nu\tau_n(1-2\eta)Au_{n,1}
+                   +\tau_n[-F_{n,0}+(1-\delta)F_{n,1}],\\
+ R^r_{n,2}&=[1-\gamma\tau_n(1-2\eta)]r_{n,1}.
+\end{aligned}
+\]
+Thus \cref{eq:sdirk-mr-scheme} takes the form
+\begin{equation}\label{eq:stage-resolvent}
+\begin{aligned}
+ L_nu_{n,i}&=R^u_{n,i}-\tau_n(1-r_{n,i}^2)\widetilde B_{n,i},\\
+ (1+\gamma\eta\tau_n)r_{n,i}
+ &=R^r_{n,i}-\tau_n(1+r_{n,i})
+                     \langle\widetilde B_{n,i},u_{n,i}\rangle,
+ \qquad L_n=I+\nu\eta\tau_n A.
+\end{aligned}
+\end{equation}
+Here $I:V\to V'$ is the embedding induced by the $L^2$ inner product.
+
+Solve the two linear problems
+\begin{equation}\label{eq:linear-stage-solves}
+ L_nv_{n,i}=R^u_{n,i},\qquad
+ L_nw_{n,i}=\widetilde B_{n,i},
+\end{equation}
+and set
+\begin{equation}\label{eq:scalar-coefficients}
+ \alpha_{n,i}=\langle\widetilde B_{n,i},v_{n,i}\rangle,
+ \qquad
+ \beta_{n,i}=\langle\widetilde B_{n,i},w_{n,i}\rangle.
+\end{equation}
+For any prescribed scalar $r$, the velocity equation then has the solution
+\begin{equation}\label{eq:velocity-reconstruction}
+ u_{n,i}(r)=v_{n,i}-\tau_n(1-r^2)w_{n,i}.
+\end{equation}
+Substitution into the scalar equation gives
+\begin{equation}\label{eq:stage-polynomial}
+\begin{aligned}
+ \mathcal F_{n,i}(r)
+ &=(1+\gamma\eta\tau_n)r-R^r_{n,i}
+       +\tau_n(1+r)\alpha_{n,i}\\
+ &\quad+\tau_n^2\beta_{n,i}(r^3+r^2-r-1)=0.
+\end{aligned}
+\end{equation}
+Every real root determines a stage solution through
+\cref{eq:velocity-reconstruction}, and every stage solution arises in
+this way. The operator $L_n$ is the same for both auxiliary solves and
+both stages of a time step. At a fixed time step size it is also
+unchanged between time steps.
+
+\subsection{Existence and conditional uniqueness}
+\label{sec:stage-solvability}
+
+\begin{proposition}[Stage solvability]\label[proposition]{prop:stage-existence}
+Let $u^n\in V$, $r^n\in\mathbb R$, and $F_{n,0},F_{n,1}\in V'$.
+For every $\tau_n>0$, the two stages of \cref{eq:sdirk-mr-scheme}
+can be solved successively, and each stage has at least one solution
+in $V\times\mathbb R$. If, in addition, $u^n\in D(A)$ and
+$F_{n,0},F_{n,1}\in H$, then every stage velocity belongs to $D(A)$.
+\end{proposition}
+
+\begin{proof}
+For $z\in V$, skew-symmetry and the two-dimensional embedding into
+$L^4$ give $\|B(z,z)\|_{V'}\le C\|z\|^2$. Also $Az\in V'$.
+Hence, when the preceding velocities belong to $V$, both
+$R^u_{n,i}$ and $\widetilde B_{n,i}$ belong to $V'$.
+The bilinear form associated with $L_n$ is continuous on $V\times V$
+and satisfies
+\[
+ \langle L_nz,z\rangle=|z|^2+\nu\eta\tau_n\|z\|^2
+ \ge\nu\eta\tau_n\|z\|^2.
+\]
+The Lax--Milgram theorem therefore gives unique solutions
+$v_{n,i},w_{n,i}\in V$ of \cref{eq:linear-stage-solves}.
+Testing the second problem with $w_{n,i}$ yields
+\begin{equation}\label{eq:beta-nonnegative}
+ \beta_{n,i}=|w_{n,i}|^2+\nu\eta\tau_n\|w_{n,i}\|^2\ge0.
+\end{equation}
+If $\beta_{n,i}>0$, then $\mathcal F_{n,i}$ is a cubic polynomial
+with positive leading coefficient and has at least one real root.
+If $\beta_{n,i}=0$, \cref{eq:beta-nonnegative} implies $w_{n,i}=0$,
+so that $\widetilde B_{n,i}=0$ and $\alpha_{n,i}=0$.
+The scalar equation then reduces to a linear equation with the unique root
+\[
+ r_{n,i}=\frac{R^r_{n,i}}{1+\gamma\eta\tau_n}.
+\]
+In either case, \cref{eq:velocity-reconstruction} gives a stage solution
+in $V\times\mathbb R$. Applying this argument first to $i=1$ and then
+to $i=2$ proves existence of the complete step without a step size restriction.
+
+For the regularity assertion, $z\in D(A)$ implies
+$B(z,z)\in H$, since $H^2(\Omega)\subset L^\infty(\Omega)$ in two
+dimensions. Thus $D(A)$ preceding velocities and $H$ stage forces give
+$R^u_{n,i},\widetilde B_{n,i}\in H$. If $L_nz=g\in H$, its weak
+solution satisfies $Az=(g-z)/(\nu\eta\tau_n)\in H$, hence
+$z\in D(A)$. Both auxiliary velocities and their linear combination
+\cref{eq:velocity-reconstruction} consequently belong to $D(A)$.
+Induction over the two stages proves the assertion.
+\end{proof}
+
+\begin{proposition}[A sufficient condition for uniqueness]
+\label[proposition]{prop:stage-uniqueness}
+For fixed preceding stage data, the stage solution is unique if
+\begin{equation}\label{eq:stage-unique-condition}
+ 1+\gamma\eta\tau_n+\tau_n\alpha_{n,i}
+       -\frac43\tau_n^2\beta_{n,i}>0.
+\end{equation}
+In particular, the more conservative condition
+\begin{equation}\label{eq:stage-unique-conservative}
+ \tau_n|\alpha_{n,i}|+\frac43\tau_n^2\beta_{n,i}
+       <1+\gamma\eta\tau_n
+\end{equation}
+is sufficient. If the first stage satisfies the condition and the
+second stage satisfies it for the resulting first-stage data, the
+complete time step has a unique solution.
+\end{proposition}
+
+\begin{proof}
+Differentiating \cref{eq:stage-polynomial} and completing the square gives
+\[
+\begin{aligned}
+ \mathcal F'_{n,i}(r)
+ &=1+\gamma\eta\tau_n+\tau_n\alpha_{n,i}
+   +\tau_n^2\beta_{n,i}\left[3\left(r+\tfrac13\right)^2-\tfrac43\right]\\
+ &\ge1+\gamma\eta\tau_n+\tau_n\alpha_{n,i}
+                         -\tfrac43\tau_n^2\beta_{n,i}.
+\end{aligned}
+\]
+Under \cref{eq:stage-unique-condition}, the polynomial is strictly
+increasing on $\mathbb R$. Existence from
+\cref{prop:stage-existence} then gives exactly one real root.
+The reconstruction formula determines the velocity uniquely.
+Condition \cref{eq:stage-unique-conservative} implies
+\cref{eq:stage-unique-condition}; applying the argument successively
+proves the assertion for the full step.
+\end{proof}
+
+The uniqueness conditions are sufficient, not necessary: their failure
+does not imply that a stage has multiple solutions. Without such a
+condition, the scheme admits any real root of \cref{eq:stage-polynomial};
+a numerical implementation must specify its root-selection rule when
+several roots are present. The existence result holds for every such
+choice. Likewise, propagation of $D(A)$ regularity does not by itself
+give a time-uniform or step-size-independent $H^2$ bound.
+
+\begin{algorithm}[htbp]
+\caption{One step of the SDIRK2-mr-ccSAV scheme}
+\label{alg:sdirk-mr}
+\begin{algorithmic}[1]
+\REQUIRE $(u^n,r^n)$, $\tau_n>0$, and stage forces $F_{n,0},F_{n,1}$.
+\STATE Set $(u_{n,0},r_{n,0})=(u^n,r^n)$.
+\FOR{$i=1,2$}
+\STATE Assemble $\widetilde B_{n,i}$, $R^u_{n,i}$, and $R^r_{n,i}$
+       from \cref{eq:stage-data}.
+\STATE Solve the two linear Stokes problems \cref{eq:linear-stage-solves}.
+\STATE Compute $\alpha_{n,i}$ and $\beta_{n,i}$ from
+       \cref{eq:scalar-coefficients}.
+\IF{$\beta_{n,i}=0$}
+\STATE Set $r_{n,i}=R^r_{n,i}/(1+\gamma\eta\tau_n)$.
+\ELSE
+\STATE Solve \cref{eq:stage-polynomial} for a real root $r_{n,i}$,
+       using the specified selection rule if necessary.
+\ENDIF
+\STATE Recover $u_{n,i}$ from \cref{eq:velocity-reconstruction}.
+\ENDFOR
+\STATE Set $(u^{n+1},r^{n+1})=(u_{n,2},r_{n,2})$.
+\end{algorithmic}
+\end{algorithm}
+
+\Cref{alg:sdirk-mr} summarizes the construction in exact arithmetic.
+In floating-point computations, the scalar residual should be checked
+using the original scalar equation in \cref{eq:stage-resolvent}; a small computed
+value of $\beta_{n,i}$ alone does not justify discarding all convective
+terms.
+
+\section{Long-time stability in \texorpdfstring{$L^2$ and $H^1$}{L2 and H1}}
+\label{sec:long-time-stability}
+
+In this section, we establish uniform-in-time bounds for the numerical
+velocity and auxiliary variable. The basic energy estimate holds on an
+arbitrary time grid and yields an $L^2$ absorbing bound together with
+an $H^1$ time-window estimate. For a fixed time step, we then prove
+uniform $H^1$ stability by controlling a modified higher-order energy
+and applying a discrete uniform Gronwall argument. All estimates apply
+to every real-root branch of the scheme and do not require stage
+uniqueness.
+
+\subsection{The discrete energy estimate and long-time \texorpdfstring{$L^2$}{L2} stability}
+\label{sec:discrete-l2}
+
+Write
+\begin{equation}\label{eq:lambda-incremental}
+ \lambda_I=2\eta-\tfrac12=\tfrac32-\sqrt2>0.
+\end{equation}
+For any two vectors $z_1,z_2$ in a real Hilbert space, the incremental
+matrix in \cref{eq:sdirk-incremental} satisfies
+\begin{equation}\label{eq:incremental-coercivity}
+\begin{aligned}
+ \sum_{i=1}^2\sum_{j=1}^i a_{ij}(z_j,z_i)
+ &=\lambda_I\sum_{i=1}^2|z_i|^2
+       +\frac{1-2\eta}{2}|z_1+z_2|^2\\
+ &\ge\lambda_I\sum_{i=1}^2|z_i|^2.
+\end{aligned}
+\end{equation}
+The same identity holds for real scalars. Define the nodal energy
+\[
+ E^n=\mathcal E(u^n,r^n)=\tfrac12\bigl(|u^n|^2+|r^n-1|^2\bigr).
+\]
+In this subsection assume $u^0\in V$, $r^0\in\mathbb R$, and
+\begin{equation}\label{eq:discrete-force-dual}
+ M_{F,V'}:=\sup_{n\ge0,\ j=0,1}\|F_{n,j}\|_{V'}<\infty,
+ \qquad
+ \|G\|_{V'}=\sup_{0\ne v\in V}\frac{|\langle G,v\rangle|}{\|v\|}.
+\end{equation}
+Allowing an arbitrary $r^0$ also covers the prescribed initialization
+$r^0=0$. Fix the constants
+\begin{equation}\label{eq:l2-constants}
+\begin{aligned}
+ C_0&=\frac{\gamma[\eta^2+(1-\eta)^2]}{2\lambda_I}
+       +\frac{M_{F,V'}^2[\eta^2+(2-\delta)^2]}{2\nu\lambda_I},\\
+ \kappa&=\lambda_I\min\{\nu\lambda_1,\gamma\},\qquad
+ M_E=\max\{E^0,C_0/\kappa\}.
+\end{aligned}
+\end{equation}
+These constants are independent of the time grid and the chosen roots.
+
+\begin{lemma}[Discrete energy inequality]\label[lemma]{lem:discrete-energy}
+For every $\tau_n>0$, the scheme satisfies
+\begin{equation}\label{eq:discrete-energy-inequality}
+\begin{aligned}
+ E^{n+1}-E^n
+ &+\frac12\sum_{i=1}^2
+       \bigl(|u_{n,i}-u_{n,i-1}|^2+|r_{n,i}-r_{n,i-1}|^2\bigr)\\
+ &+\frac{\nu\lambda_I}{2}\tau_n\sum_{i=1}^2\|u_{n,i}\|^2
+  +\frac{\gamma\lambda_I}{2}\tau_n\sum_{i=1}^2|r_{n,i}-1|^2
+ \le C_0\tau_n.
+\end{aligned}
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Pair the velocity equation in \cref{eq:sdirk-mr-scheme} with
+$u_{n,i}$ and multiply the scalar equation by $r_{n,i}-1$.
+The convective terms cancel by \cref{eq:ccsav-cancellation}.
+Summing over $i=1,2$ and using
+$2(x-y,x)=|x|^2-|y|^2+|x-y|^2$ gives
+\begin{equation}\label{eq:discrete-energy-identity}
+\begin{aligned}
+ E^{n+1}-E^n
+ &+\frac12\sum_{i=1}^2
+       \bigl(|u_{n,i}-u_{n,i-1}|^2+|r_{n,i}-r_{n,i-1}|^2\bigr)\\
+ &+\nu\tau_n\sum_{i=1}^2\sum_{j=1}^i
+              a_{ij}(\nabla u_{n,j},\nabla u_{n,i})\\
+ &+\gamma\tau_n\sum_{i=1}^2\sum_{j=1}^i
+              a_{ij}r_{n,j}(r_{n,i}-1)
+ =\tau_n\sum_{i=1}^2\sum_{j=0}^{i-1}
+              \widehat a_{ij}\langle F_{n,j},u_{n,i}\rangle.
+\end{aligned}
+\end{equation}
+The velocity quadratic form is bounded below by
+$\lambda_I\sum_i\|u_{n,i}\|^2$. For the scalar term, write
+$r_{n,j}=(r_{n,j}-1)+1$. Its row sums are $\eta$ and $1-\eta$,
+so \cref{eq:incremental-coercivity} and Young's inequality imply
+\[
+ \sum_{i=1}^2\sum_{j=1}^i a_{ij}r_{n,j}(r_{n,i}-1)
+ \ge\frac{\lambda_I}{2}\sum_{i=1}^2|r_{n,i}-1|^2
+       -\frac{\eta^2+(1-\eta)^2}{2\lambda_I}.
+\]
+For each force row,
+\[
+ \left|\sum_{j=0}^{i-1}\widehat a_{ij}
+                 \langle F_{n,j},u_{n,i}\rangle\right|
+ \le\frac{\nu\lambda_I}{2}\|u_{n,i}\|^2
+  +\frac{M_{F,V'}^2}{2\nu\lambda_I}
+                  \left(\sum_{j=0}^{i-1}|\widehat a_{ij}|\right)^2.
+\]
+The two absolute row sums are $\eta$ and $2-\delta$.
+Substitution into \cref{eq:discrete-energy-identity} proves the result.
+\end{proof}
+
+\begin{theorem}[Uniform $L^2$ bounds and absorption]\label{thm:discrete-l2}
+Under \cref{eq:discrete-force-dual}, for every positive time grid,
+\begin{equation}\label{eq:discrete-l2-bound}
+ E^N\le Q_NE^0+\frac{C_0}{\kappa}(1-Q_N)\le M_E,
+ \qquad Q_N=\prod_{n=0}^{N-1}(1+\kappa\tau_n)^{-1},\quad Q_0=1.
+\end{equation}
+For $0\le m<N$, the stages satisfy
+\begin{equation}\label{eq:discrete-h1-window}
+ \sum_{n=m}^{N-1}\tau_n\sum_{i=1}^2\|u_{n,i}\|^2
+ \le\frac{2}{\nu\lambda_I}\bigl[M_E+C_0(t_N-t_m)\bigr].
+\end{equation}
+If $t_N\to\infty$, then $\limsup_{N\to\infty}E^N\le C_0/\kappa$.
+In particular, every energy sublevel $E\le C_0/\kappa+\varepsilon$,
+$\varepsilon>0$, absorbs all initial states of bounded energy.
+If also $\tau_n\le\bar\tau<\infty$, there is a constant
+$K_0=8M_E+4C_0\bar\tau$ such that
+\begin{equation}\label{eq:stage-low-bounds}
+ |u_{n,i}|^2\le K_0,\qquad |r_{n,i}-1|^2\le K_0,
+ \qquad n\ge0,\quad i=0,1,2.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Keep only the last-stage dissipation in
+\cref{eq:discrete-energy-inequality} and use Poincare's inequality.
+Since $u_{n,2}=u^{n+1}$ and $r_{n,2}=r^{n+1}$, this gives
+\[
+ (1+\kappa\tau_n)E^{n+1}\le E^n+C_0\tau_n.
+\]
+Subtracting $(1+\kappa\tau_n)C_0/\kappa$ and iterating proves
+\cref{eq:discrete-l2-bound}. Summation of the full energy inequality
+from $m$ to $N-1$, followed by $E^N\ge0$ and $E^m\le M_E$,
+gives \cref{eq:discrete-h1-window}.
+
+For absorption, the positive cross terms in the product yield
+$Q_N\le(1+\kappa t_N)^{-1}$. Therefore
+\[
+ E^N\le\frac{C_0}{\kappa}
+       +\frac{(E^0-C_0/\kappa)_+}{1+\kappa t_N},
+ \qquad x_+=\max\{x,0\}.
+\]
+The second term tends to zero uniformly over bounded sets of initial
+energies. No upper bound or ratio condition on the steps is needed
+for this nodal conclusion.
+
+Finally, if $\tau_n\le\bar\tau$, the increment terms in
+\cref{eq:discrete-energy-inequality} imply
+\[
+ \sum_{i=1}^2\bigl(|u_{n,i}-u_{n,i-1}|^2
+                   +|r_{n,i}-r_{n,i-1}|^2\bigr)
+ \le2(M_E+C_0\bar\tau).
+\]
+Using $|x+y|^2\le2|x|^2+2|y|^2$ for the first-stage velocity and
+shifted scalar proves \cref{eq:stage-low-bounds}. Stages $0$ and $2$
+are already controlled by the nodal bound.
+\end{proof}
+
+By Poincare's inequality, \cref{eq:discrete-h1-window} also bounds
+the full $H^1$ norm on every window of bounded physical length.
+It is an integral-in-time estimate and does not alone provide a
+step-size-independent pointwise $H^1$ bound. For a fixed step,
+$Q_N=(1+\kappa\tau)^{-N}$, so the nodal transient decays exponentially
+in physical time.
+
+\subsection{Uniform \texorpdfstring{$H^1$}{H1} stability for a fixed time step}
+\label{sec:discrete-h1}
+
+We now assume
+\begin{equation}\label{eq:h1-discrete-assumptions}
+ u^0\in D(A),\qquad r^0=0,\qquad
+ M_{F,H}:=\sup_{n\ge0,\ j=0,1}|F_{n,j}|<\infty,\qquad
+ \tau_n=\tau\in(0,\bar\tau].
+\end{equation}
+Here $\bar\tau<\infty$ is fixed in advance. In this subsection, constants
+$C$ may depend on $\Omega$, $\nu$, $\gamma$, $M_{F,H}$, $\|u^0\|$,
+$|Au^0|$, and $\bar\tau$, but not on $n$, the particular $\tau$, or
+the real-root branch. Constants $C_\theta$ may additionally depend on
+a fixed positive parameter $\theta$. The preceding estimates apply
+with $M_{F,V'}=\lambda_1^{-1/2}M_{F,H}$.
+
+We first collect their low-order consequences. In addition to
+\cref{eq:stage-low-bounds}, which bounds $|1-r_{n,i}^2|$, we have
+\begin{align}
+ \tau\bigl(\|u^n\|^2+\|u_{n,1}\|^2\bigr)&\le C,
+       \label{eq:weighted-low-point}\\
+ \tau\sum_{n=m}^{N-1}\bigl(\|u^n\|^2+\|u_{n,1}\|^2\bigr)
+       &\le C\bigl(1+(N-m)\tau\bigr),\qquad 0\le m<N.
+       \label{eq:weighted-low-window}
+\end{align}
+Indeed, the first-stage terms follow directly from
+\cref{eq:discrete-h1-window}. For the old nodal terms with $m\ge1$,
+use $u^n=u_{n-1,2}$ and shift the summation interval to
+$m-1,\ldots,N-2$, whose length is unchanged for a fixed step.
+When $m=0$, separate the initial term and use
+$\tau\|u^0\|^2\le\bar\tau\|u^0\|^2$. Taking a single-step window
+also proves \cref{eq:weighted-low-point}.
+
+\begin{lemma}[Higher-order stage estimates]\label[lemma]{lem:h1-stage}
+Under \cref{eq:h1-discrete-assumptions}, fix
+$0<\theta<\nu\lambda_I/4$. Then
+\begin{equation}\label{eq:h1-master}
+\begin{aligned}
+ \|u^{n+1}\|^2-\|u^n\|^2
+ &+\nu\lambda_I\tau\bigl(|Au_{n,1}|^2+|Au^{n+1}|^2\bigr)\\
+ &\le\theta\tau|Au^n|^2
+       +C_\theta\tau\bigl(\|u^n\|^4+\|u_{n,1}\|^4+1\bigr),
+\end{aligned}
+\end{equation}
+and the first stage satisfies
+\begin{equation}\label{eq:h1-first-stage}
+ \|u_{n,1}\|^2\le\|u^n\|^2+\frac\theta2\tau|Au^n|^2
+                  +C_\theta\tau\|u^n\|^4+C_\theta\tau.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+By \cref{prop:stage-existence}, all stage velocities belong to $D(A)$.
+We may therefore take the $H$ inner product of the velocity equation
+with $2Au_{n,i}$. Summation over $i$ gives the gradient energy difference,
+the nonnegative increments $\sum_i\|u_{n,i}-u_{n,i-1}\|^2$, and a
+viscous term bounded below by
+$2\nu\lambda_I\tau\sum_i|Au_{n,i}|^2$.
+
+There are exactly three convective pairings, indexed by
+$(i,j)=(1,0),(2,0),(2,1)$. Estimate \cref{eq:trilinear-a} and the
+low-order bounds give, for each pair,
+\begin{equation}\label{eq:h1-nonlinear-young}
+\begin{aligned}
+ 2\bigl|(1-r_{n,i}^2)\widehat a_{ij}
+                     (B_{n,j},Au_{n,i})\bigr|
+ &\le C\|u_{n,j}\||Au_{n,j}|^{1/2}|Au_{n,i}|\\
+ &\le\varepsilon|Au_{n,i}|^2+\sigma|Au_{n,j}|^2
+                    +C_{\varepsilon,\sigma}\|u_{n,j}\|^4.
+\end{aligned}
+\end{equation}
+Take $\varepsilon=\nu\lambda_I/4$ for all three terms,
+$\sigma=\theta/2$ for the two terms with $j=0$, and
+$\sigma=\nu\lambda_I/4$ for $(i,j)=(2,1)$.
+Their sum uses at most
+$(\nu\lambda_I/2)(|Au_{n,1}|^2+|Au^{n+1}|^2)$ of the current
+viscous dissipation, leaving the old-node term $\theta|Au^n|^2$.
+For the force, each row satisfies
+\[
+ 2\left|\sum_{j<i}\widehat a_{ij}(F_{n,j},Au_{n,i})\right|
+ \le\frac{\nu\lambda_I}{4}|Au_{n,i}|^2+C.
+\]
+After multiplication by $\tau$ and absorption, the coefficient of each
+current $|Au|^2$ is at least $5\nu\lambda_I/4$.
+Discarding the increments and reducing this coefficient to
+$\nu\lambda_I$ proves \cref{eq:h1-master}.
+For the first stage alone, the same estimates leave the positive
+coefficient $2\nu\eta-\nu\lambda_I/2$ on $\tau|Au_{n,1}|^2$.
+Dropping that dissipation and the increment proves
+\cref{eq:h1-first-stage}.
+\end{proof}
+
+\begin{theorem}[Uniform $H^1$ stability]\label{thm:discrete-h1}
+Under \cref{eq:h1-discrete-assumptions}, every solution sequence of
+\cref{eq:sdirk-mr-scheme} satisfies
+\begin{equation}\label{eq:discrete-h1-uniform}
+ \sup_{n\ge0,\ i=0,1,2}\|u_{n,i}\|^2\le C.
+\end{equation}
+Moreover, for every $0\le m<N$,
+\begin{equation}\label{eq:discrete-h2-window}
+ \tau\sum_{n=m}^{N-1}\sum_{i=1}^2|Au_{n,i}|^2
+ \le C\bigl(1+(N-m)\tau\bigr).
+\end{equation}
+The constants have the dependencies specified above and are uniform
+for $0<\tau\le\bar\tau$. No additional small-step condition is required.
+\end{theorem}
+
+\begin{proof}
+The old-node term in \cref{eq:h1-master} prevents a direct estimate
+of the gradient energy alone. We include it in a modified energy,
+prove a window bound for that energy without using the desired
+pointwise estimate, and then average an explicit recurrence over a
+fixed physical-time window.
+
+\emph{Modified energy and its recurrence.}
+Fix $\theta=\nu\lambda_I/8$ and define
+\begin{equation}\label{eq:modified-h1-energy}
+ X_n=\|u^n\|^2+\theta\tau|Au^n|^2.
+\end{equation}
+Rearranging \cref{eq:h1-master} gives
+\begin{equation}\label{eq:modified-h1-dissipation}
+\begin{aligned}
+ X_{n+1}-X_n
+ &+(\nu\lambda_I-\theta)\tau
+                   \bigl(|Au_{n,1}|^2+|Au^{n+1}|^2\bigr)\\
+ &\le C\tau\bigl(\|u^n\|^4+\|u_{n,1}\|^4+1\bigr).
+\end{aligned}
+\end{equation}
+By \cref{eq:weighted-low-point},
+$\tau\|u^n\|^4\le C\|u^n\|^2\le CX_n$.
+Thus \cref{eq:h1-first-stage} implies
+\begin{equation}\label{eq:internal-h1-control}
+ \|u_{n,1}\|^2\le CX_n+C\tau.
+\end{equation}
+Multiplication by $\|u_{n,1}\|^2$ and another use of
+\cref{eq:weighted-low-point} yield
+$\|u_{n,1}\|^4\le C\|u_{n,1}\|^2X_n+C$.
+Consequently, \cref{eq:modified-h1-dissipation} implies
+\begin{equation}\label{eq:explicit-h1-recurrence}
+ X_{n+1}\le
+ \bigl[1+C\tau(\|u^n\|^2+\|u_{n,1}\|^2)\bigr]X_n+C\tau.
+\end{equation}
+Choose a common constant for these estimates and hold it fixed during
+iteration. The coefficient multiplies $X_n$, so no denominator
+positivity condition involving the time step is needed.
+
+\emph{A window bound for the modified energy.}
+The gradient part of $\tau\sum_n X_n$ is already bounded by
+\cref{eq:weighted-low-window}. The remaining term contains
+$\tau^2|Au^n|^2$, which we must control first. Set
+$W_n=\tau^2|Au^n|^2$. Multiplying \cref{eq:h1-master} by $\tau$,
+discarding the new gradient term and first-stage dissipation, and
+dividing by $\nu\lambda_I$ gives
+\begin{equation}\label{eq:weighted-stokes-recurrence}
+ W_{n+1}\le\tfrac18 W_n
+    +C\tau\|u^n\|^2
+    +C\tau^2\bigl(\|u^n\|^4+\|u_{n,1}\|^4+1\bigr).
+\end{equation}
+The last two terms are uniformly bounded by
+\cref{eq:weighted-low-point} and $\tau\le\bar\tau$.
+A geometric-series argument, with
+$W_0\le\bar\tau^2|Au^0|^2$, therefore gives $\sup_nW_n\le C$.
+For the window sum, retain the time weights and observe that
+\[
+ \tau^2\|u^n\|^4\le C\tau\|u^n\|^2,\qquad
+ \tau^2\|u_{n,1}\|^4\le C\tau\|u_{n,1}\|^2.
+\]
+Using \cref{eq:weighted-low-window} and
+$(N-m)\tau^2\le\bar\tau(N-m)\tau$, the sum of the driving terms
+in \cref{eq:weighted-stokes-recurrence} is bounded by
+$C(1+(N-m)\tau)$. Since
+$\sum_{n=m}^{N-1}W_{n+1}=\sum_{n=m}^{N-1}W_n-W_m+W_N$, we obtain
+\[
+ \tfrac78\sum_{n=m}^{N-1}W_n
+ \le W_m-W_N+C\bigl(1+(N-m)\tau\bigr)
+ \le C\bigl(1+(N-m)\tau\bigr).
+\]
+It follows that
+\begin{equation}\label{eq:modified-h1-window}
+ \tau\sum_{n=m}^{N-1}X_n
+ =\tau\sum_{n=m}^{N-1}\|u^n\|^2
+       +\theta\sum_{n=m}^{N-1}W_n
+ \le C\bigl(1+(N-m)\tau\bigr).
+\end{equation}
+This argument uses neither a pointwise $H^1$ bound nor an $H^2$
+time-window bound.
+
+\emph{Uniform Gronwall estimate and the initial interval.}
+Iteration of \cref{eq:explicit-h1-recurrence} from any $k<N$, using
+$1+x\le e^x$ and \cref{eq:weighted-low-window}, yields
+\begin{equation}\label{eq:h1-iteration}
+ X_N\le e^{C(1+(N-k)\tau)}\bigl[X_k+C(N-k)\tau\bigr].
+\end{equation}
+Fix $T_w>0$ independently of $\tau$. If $N\tau\ge T_w$, set
+$m=N-\lceil T_w/\tau\rceil$ and $L=(N-m)\tau$, so that
+$T_w\le L<T_w+\bar\tau$. For each $k=m,\ldots,N-1$, the preceding
+estimate is bounded by $e^{C(1+L)}(X_k+CL)$.
+Multiply by $\tau$, sum over $k$, and divide by $L$. By
+\cref{eq:modified-h1-window},
+\[
+ X_N\le e^{C(1+L)}
+        \left[\frac{\tau}{L}\sum_{k=m}^{N-1}X_k+CL\right]
+ \le e^{C(1+T_w+\bar\tau)}
+        \left[\frac{C(1+T_w+\bar\tau)}{T_w}
+                         +C(T_w+\bar\tau)\right].
+\]
+For $N\tau<T_w$, apply \cref{eq:h1-iteration} with $k=0$ and use
+\[
+ X_0\le\|u^0\|^2+\theta\bar\tau|Au^0|^2.
+\]
+The case $N=0$ follows directly from the same initial bound.
+Fixing $T_w$ once and for all gives $\sup_nX_n\le C$.
+The nodal gradient norm is bounded by $X_n$, and
+\cref{eq:internal-h1-control} bounds the first stage.
+The second stage is the next node. This proves
+\cref{eq:discrete-h1-uniform}.
+
+\emph{Higher-order dissipation on time windows.}
+We may now use the proved pointwise bound to write
+$\|u^n\|^4+\|u_{n,1}\|^4
+ \le C(\|u^n\|^2+\|u_{n,1}\|^2)$.
+Summing \cref{eq:modified-h1-dissipation} from $m$ to $N-1$ gives
+\[
+\begin{aligned}
+ (\nu\lambda_I-\theta)\tau
+      \sum_{n=m}^{N-1}\bigl(|Au_{n,1}|^2+|Au^{n+1}|^2\bigr)
+ &\le X_m-X_N\\
+ &\quad+C\tau\sum_{n=m}^{N-1}
+                 (\|u^n\|^2+\|u_{n,1}\|^2+1)\\
+ &\le C\bigl(1+(N-m)\tau\bigr).
+\end{aligned}
+\]
+Because $\nu\lambda_I-\theta>0$, this proves
+\cref{eq:discrete-h2-window}.
+\end{proof}
+
+By \cref{eq:stokes-estimates}, the last theorem gives a full $H^1$
+uniform bound and an $H^2$ time-window bound. Its constants retain
+initial-data dependence, so it does not assert an $H^1$ absorbing
+radius independent of the initial data. Moreover, $X_n\le C$ only
+yields $|Au^n|^2\le C/(\theta\tau)$; a step-size-independent pointwise
+$H^2$ estimate does not follow. The assumption $u^0\in D(A)$ is used
+both to justify the stage tests and to control the initial weighted
+Stokes energy. The fixed-step hypothesis is used when shifting window
+sums and forming $X_n$ and $W_n$; the $H^1$ conclusion here is not
+claimed for arbitrary variable steps.
+
+\section{Refined auxiliary-variable estimates and finite-time convergence}
+\label{sec:convergence}
+
+In this section, we first prove that the auxiliary variable remains
+of order $\tau$ uniformly in time. Its contribution to the velocity
+coefficient is therefore of order $\tau^2$. We then construct reference
+stages and establish second-order convergence of the velocity on a
+fixed finite time interval. Throughout this section the time step is
+constant, $0<\tau\le\bar\tau$, and the assumptions in
+\cref{eq:h1-discrete-assumptions} are in force. The estimates apply to
+all real-root branches of the scheme.
+
+\subsection{A refined estimate for the auxiliary variable}
+\label{sec:auxiliary-refined}
+
+\begin{theorem}[Uniform first-order auxiliary-variable bound]
+\label{thm:auxiliary-refined}
+Under \cref{eq:h1-discrete-assumptions}, there is a constant $C$,
+with the same allowed dependencies as in \cref{thm:discrete-h1}, such that
+\begin{equation}\label{eq:auxiliary-refined}
+ \sup_{n\ge0,\ i=0,1,2}|r_{n,i}|\le C\tau,
+ \qquad
+ \sup_{n\ge0,\ i=0,1,2}|G_u(r_{n,i})-1|\le C\tau^2.
+\end{equation}
+In particular, for $0\le j<i\le2$,
+\begin{equation}\label{eq:auxiliary-velocity-perturbation}
+ \|r_{n,i}^2B(u_{n,j},u_{n,j})\|_{V'}\le C\tau^2.
+\end{equation}
+The constants are independent of the final time, the particular step
+size, and the selected roots.
+\end{theorem}
+
+\begin{proof}
+We use the established $H^1$ bound and $H^2$ window estimate to control
+the accumulated scalar forcing. Exponential damping of the scalar
+recurrence then prevents this forcing from accumulating over arbitrarily
+long times.
+
+\emph{Window estimates for convection and stage differences.}
+By \cref{eq:trilinear-a} and \cref{thm:discrete-h1},
+\[
+ |B_{n,j}|^2\le C|u_{n,j}|\|u_{n,j}\|^2|Au_{n,j}|
+              \le C(1+|Au_{n,j}|^2),\qquad j=0,1.
+\]
+The $H^2$ window bound also controls the old nodes: for $m\ge1$,
+shift $u^n=u_{n-1,2}$; for $m=0$, separate the term
+$\tau|Au^0|^2\le\bar\tau|Au^0|^2$.
+It follows that, for every $0\le m<N$,
+\begin{equation}\label{eq:convection-window}
+ \tau\sum_{n=m}^{N-1}\sum_{j=0}^1|B_{n,j}|^2
+ \le C\bigl(1+(N-m)\tau\bigr).
+\end{equation}
+Dividing the velocity stages by $\tau$ and using the bounded
+coefficients $|1-r_{n,i}^2|$ from \cref{eq:stage-low-bounds} gives
+\[
+ \sum_{i=1}^2\left|\frac{u_{n,i}-u_{n,i-1}}{\tau}\right|^2
+ \le C\left(\sum_{i=1}^2|Au_{n,i}|^2
+              +\sum_{j=0}^1|B_{n,j}|^2+1\right).
+\]
+Hence
+\begin{equation}\label{eq:stage-difference-window}
+ \tau\sum_{n=m}^{N-1}\sum_{i=1}^2
+       \left|\frac{u_{n,i}-u_{n,i-1}}{\tau}\right|^2
+ \le C\bigl(1+(N-m)\tau\bigr).
+\end{equation}
+These are window estimates, not pointwise bounds on the stage
+difference quotients.
+
+\emph{The accumulated scalar defect.}
+Define the scalar work defect and its contribution to the scalar equation by
+\[
+ \mathcal D_{n,i}=\sum_{j=0}^{i-1}\widehat a_{ij}(B_{n,j},u_{n,i}),
+ \qquad h_{n,i}=(1+r_{n,i})\mathcal D_{n,i}.
+\]
+All inner products are in $H$, since the stages belong to $D(A)$.
+Skew-symmetry gives $(B_{n,j},u_{n,j})=0$, and thus
+\[
+ \mathcal D_{n,i}=\sum_{j=0}^{i-1}\widehat a_{ij}
+                         (B_{n,j},u_{n,i}-u_{n,j}).
+\]
+Expressing each difference as a sum of adjacent stage differences yields
+\[
+ \sum_{i=1}^2|\mathcal D_{n,i}|
+ \le C\tau\left(\sum_{j=0}^1|B_{n,j}|^2\right)^{1/2}
+       \left(\sum_{i=1}^2
+          \left|\frac{u_{n,i}-u_{n,i-1}}{\tau}\right|^2\right)^{1/2}.
+\]
+Multiply by $\tau$ and sum over a window. Weighted Cauchy--Schwarz,
+\cref{eq:convection-window,eq:stage-difference-window}, and the existing
+bound on $|1+r_{n,i}|$ give
+\begin{equation}\label{eq:scalar-driving-window}
+ \tau\sum_{n=m}^{N-1}\bigl(|h_{n,1}|+|h_{n,2}|\bigr)
+ \le C_h\tau\bigl(1+(N-m)\tau\bigr).
+\end{equation}
+Fix this constant $C_h$ for the remainder of the proof. This estimate
+uses only the previously proved $O(1)$ bound on the scalar, not the
+first-order bound being proved.
+
+\emph{Damped propagation of the scalar forcing.}
+Set
+\[
+ s(z)=\frac1{1+\eta z},\qquad
+ \mathcal R(z)=\frac{1-(1-2\eta)z}{(1+\eta z)^2}.
+\]
+Eliminating the first scalar stage gives the exact identities
+\begin{equation}\label{eq:scalar-damped-recurrence}
+\begin{aligned}
+ r_{n,1}&=s(\gamma\tau)r^n-\tau s(\gamma\tau)h_{n,1},\\
+ r^{n+1}&=\mathcal R(\gamma\tau)r^n
+       -\tau\mathcal R(\gamma\tau)h_{n,1}
+       -\tau s(\gamma\tau)h_{n,2}.
+\end{aligned}
+\end{equation}
+Here $h_{n,i}$ is defined from the computed solution, so this identity
+does not assume that the nonlinear stages are independent linear problems.
+Clearly $0<s(z)\le1$ for $z\ge0$. If the numerator of $\mathcal R(z)$
+is nonnegative, then
+\[
+ 1-|\mathcal R(z)|=\frac{z+\eta^2z^2}{(1+\eta z)^2}.
+\]
+If it is negative, then
+\[
+ 1-|\mathcal R(z)|=\frac{2+(4\eta-1)z+\eta^2z^2}{(1+\eta z)^2}.
+\]
+Since $0<4\eta-1<1$, both cases imply
+\begin{equation}\label{eq:scalar-uniform-decay}
+ |\mathcal R(\gamma\tau)|\le1-c\tau\le e^{-c\tau},
+ \qquad c=\frac{(4\eta-1)\gamma}{(1+\eta\gamma\bar\tau)^2}>0.
+\end{equation}
+The first inequality also ensures $1-c\tau\ge0$ on the prescribed
+step range. Using $r^0=0$ in \cref{eq:scalar-damped-recurrence},
+\[
+ |r^N|\le\tau\sum_{n=0}^{N-1}e^{-c(N-1-n)\tau}
+                           \bigl(|h_{n,1}|+|h_{n,2}|\bigr).
+\]
+Fix a physical window length $T_w>0$, and set
+$K=\lceil T_w/\tau\rceil$, so $T_w\le K\tau<T_w+\bar\tau$.
+Partition this sum backwards from $n=N-1$ into blocks of at most $K$
+steps. On the $\ell$th block, counting from zero, the exponential is
+at most $e^{-c\ell K\tau}$, while \cref{eq:scalar-driving-window}
+bounds its unweighted contribution by $C_h\tau(1+K\tau)$.
+The earliest, possibly incomplete, block satisfies the same bound.
+Therefore
+\[
+ |r^N|\le C_h\tau(1+T_w+\bar\tau)
+                   \sum_{\ell=0}^{\infty}e^{-c\ell T_w}
+       =\frac{C_h(1+T_w+\bar\tau)}{1-e^{-cT_w}}\tau.
+\]
+This also holds for $N=0$. The first identity in
+\cref{eq:scalar-damped-recurrence}, together with the single-step case
+of \cref{eq:scalar-driving-window}, gives
+$|r_{n,1}|\le|r^n|+\tau|h_{n,1}|\le C\tau$.
+Stages $0$ and $2$ are nodes. Finally,
+$|G_u(r)-1|=r^2$ proves \cref{eq:auxiliary-refined}, and
+$\|B(v,v)\|_{V'}\le C\|v\|^2$ proves
+\cref{eq:auxiliary-velocity-perturbation}.
+\end{proof}
+
+\subsection{Reference stages and local consistency}
+\label{sec:reference-consistency}
+
+Fix $T>0$. For the consistency analysis we impose the sufficient
+regularity assumptions
+\begin{equation}\label{eq:exact-solution-regularity}
+\begin{aligned}
+ u&\in W^{3,\infty}(0,T;H)\cap W^{2,\infty}(0,T;D(A))
+                  \cap W^{1,\infty}(0,T;D(A^2)),\\
+ F&\in W^{2,\infty}(0,T;H).
+\end{aligned}
+\end{equation}
+Here $D(A^2)=\{v\in D(A):Av\in D(A)\}$, endowed with its graph
+norm. In particular, we use
+\[
+ \|v\|_{D(A)}^2=|v|^2+|Av|^2,\qquad
+ \|v\|_{D(A^2)}^2=|v|^2+|Av|^2+|A^2v|^2.
+\]
+These assumptions include Stokes boundary compatibility and are not
+identified with ordinary spatial $H^4$ regularity. They concern the
+exact solution, not the numerical stages. On every complete time step
+$t_{n+1}\le T$, take the force samples
+\begin{equation}\label{eq:convergence-force-sampling}
+ F_{n,0}=F(t_n),\qquad F_{n,1}=F(t_n+\eta\tau).
+\end{equation}
+Constants $C_T$ may depend on the norms in
+\cref{eq:exact-solution-regularity}, $T$, and the fixed data, but not on
+$n$ or the particular $\tau$.
+
+Define $q(t)=F(t)-B(u(t),u(t))$, so that $u_t=-\nu Au+q$.
+The reference stages are
+\begin{equation}\label{eq:reference-stages}
+\begin{aligned}
+ U_{n,0}&=u(t_n),\qquad U_{n,2}=u(t_{n+1}),\\
+ (I+\eta\nu\tau A)U_{n,1}&=u(t_n)+\eta\tau q(t_n).
+\end{aligned}
+\end{equation}
+Thus the first reference stage satisfies the uncorrected velocity
+stage exactly, while the second is the exact endpoint. Define the
+second-stage increment residual by
+\begin{equation}\label{eq:reference-residual}
+\begin{aligned}
+ \mathcal R_n
+ &=U_{n,2}-U_{n,1}
+       +\nu\tau\bigl[(1-2\eta)AU_{n,1}+\eta AU_{n,2}\bigr]\\
+ &\quad-\tau\sum_{j=0}^1\widehat a_{2j}
+                    \bigl[F_{n,j}-B(U_{n,j},U_{n,j})\bigr].
+\end{aligned}
+\end{equation}
+This residual appears with a positive sign on the right-hand side of
+the reference second-stage equation.
+
+\begin{lemma}[Reference-stage consistency]\label[lemma]{lem:reference-consistency}
+Under \cref{eq:exact-solution-regularity,eq:convergence-force-sampling},
+for every $t_{n+1}\le T$,
+\begin{equation}\label{eq:reference-consistency-bounds}
+ \|U_{n,1}-u(t_n+\eta\tau)\|_{D(A)}\le C_T\tau^2,
+ \qquad |\mathcal R_n|\le C_T\tau^3.
+\end{equation}
+Moreover, $\max_{i=0,1,2}\|U_{n,i}\|_{D(A)}\le C_T$.
+\end{lemma}
+
+\begin{proof}
+Set $S_\tau=(I+\eta\nu\tau A)^{-1}$. The spectral representation of
+the positive self-adjoint Stokes operator shows that $S_\tau$ commutes
+with $A$ on its domain and is a contraction in $H$, $D(A)$, and
+$D(A^2)$. In this proof, $O_H(\tau^k)$ denotes a remainder whose
+$H$ norm is at most $C_T\tau^k$.
+
+The equation for $u$ gives the exact identity
+\begin{equation}\label{eq:reference-resolvent-identity}
+ U_{n,1}=u(t_n)+\eta\tau S_\tau u_t(t_n).
+\end{equation}
+The nodal values $u_t(t_n)$ belong to $D(A^2)$ with a common bound:
+this follows from $H$ continuity of $u_t$, its essential bound in
+$D(A^2)$, and weak compactness in that graph space.
+Using $(S_\tau-I)v=-\eta\nu\tau AS_\tau v$ and Taylor's formula
+in $D(A)$, we obtain
+\[
+\begin{aligned}
+ \|U_{n,1}-u(t_n+\eta\tau)\|_{D(A)}
+ &\le\eta^2\tau^2\left(
+       \nu\|u_t\|_{L^\infty(0,T;D(A^2))}
+       +\tfrac12\|u_{tt}\|_{L^\infty(0,T;D(A))}\right).
+\end{aligned}
+\]
+The uniform graph-norm bound on $U_{n,1}$ follows directly from
+\cref{eq:reference-resolvent-identity}.
+
+To estimate the endpoint residual, expand the same identity once more
+in $H$. The contraction bounds give
+\begin{align*}
+ U_{n,1}&=u(t_n)+\eta\tau u_t(t_n)
+                 -\eta^2\nu\tau^2 Au_t(t_n)+O_H(\tau^3),\\
+ AU_{n,1}&=Au(t_n)+\eta\tau Au_t(t_n)+O_H(\tau^2).
+\end{align*}
+For the second line we apply $A$ to
+\cref{eq:reference-resolvent-identity} directly; its remainder is
+$-\eta^2\nu\tau^2A^2S_\tau u_t(t_n)$. No derivative is applied
+to a remainder controlled only in $H$.
+The estimate
+$|B(v,w)|\le C\|v\|_{D(A)}\|w\|_{D(A)}$ implies
+$q\in W^{2,\infty}(0,T;H)$ and local Lipschitz continuity of
+$B(v,v)$ from $D(A)$ to $H$. Hence
+\[
+ F_{n,1}-B(U_{n,1},U_{n,1})
+     =q(t_n)+\eta\tau q'(t_n)+O_H(\tau^2).
+\]
+Taylor expansion of the exact endpoint, using
+$u_{tt}=-\nu Au_t+q'$, gives
+\begin{equation}\label{eq:exact-endpoint-expansion}
+\begin{aligned}
+ (I+\eta\nu\tau A)u(t_n+\tau)
+ &=u(t_n)+\tau[-\nu(1-\eta)Au(t_n)+q(t_n)]\\
+ &\quad+\tau^2[\nu(\eta-\tfrac12)Au_t(t_n)
+                         +\tfrac12q'(t_n)]+O_H(\tau^3).
+\end{aligned}
+\end{equation}
+The third-order remainder is controlled by $u_{ttt}$ in $H$ and
+$Au_{tt}$ in $H$. On the other hand, the reference right-hand side is
+\begin{equation}\label{eq:reference-endpoint-expansion}
+\begin{aligned}
+ &U_{n,1}-\nu\tau(1-2\eta)AU_{n,1}
+       +\tau\sum_{j=0}^1\widehat a_{2j}
+                 [F_{n,j}-B(U_{n,j},U_{n,j})]\\
+ &=u(t_n)+\tau[-\nu(1-\eta)Au(t_n)+q(t_n)]\\
+ &\quad+\tau^2[-\nu\eta(1-\eta)Au_t(t_n)
+                         +\eta(1-\delta)q'(t_n)]+O_H(\tau^3).
+\end{aligned}
+\end{equation}
+The coefficient identities
+\[
+ \eta(1-\eta)=\tfrac12-\eta,\qquad
+ \eta(1-\delta)=\tfrac12
+\]
+make the second-order terms agree. Subtracting
+\cref{eq:reference-endpoint-expansion} from
+\cref{eq:exact-endpoint-expansion} proves $|\mathcal R_n|\le C_T\tau^3$.
+\end{proof}
+
+\subsection{Finite-time velocity error estimates}
+\label{sec:velocity-convergence}
+
+\begin{theorem}[Second-order velocity convergence]\label{thm:velocity-convergence}
+Assume \cref{eq:h1-discrete-assumptions,eq:exact-solution-regularity,eq:convergence-force-sampling}, with $u^0=u(0)$ and $r^0=0$.
+Then, for $N_T=\lfloor T/\tau\rfloor$,
+\begin{equation}\label{eq:velocity-convergence}
+\begin{aligned}
+ \max_{0\le n\le N_T}|u^n-u(t_n)|&\le C_T\tau^2,\\
+ \left(\tau\sum_{n=0}^{N_T-1}\sum_{i=1}^2
+       \|u_{n,i}-u(t_n+c_i\tau)\|^2\right)^{1/2}
+       &\le C_T\tau^2.
+\end{aligned}
+\end{equation}
+The constant is independent of $\tau\in(0,\bar\tau]$ and of the
+real-root branch. It may depend on $T$ and the specified exact-solution
+norms, in addition to the data entering the stability estimates.
+\end{theorem}
+
+\begin{proof}
+Compare the numerical stages with \cref{eq:reference-stages} and set
+\[
+ e_{n,i}=u_{n,i}-U_{n,i},\qquad
+ e^n=e_{n,0}=u^n-u(t_n),\qquad e^{n+1}=e_{n,2}.
+\]
+For $0\le j<i\le2$, define the full nonlinear difference
+\[
+ \mathcal N_{n,i,j}=(1-r_{n,i}^2)B(u_{n,j},u_{n,j})
+                                  -B(U_{n,j},U_{n,j}).
+\]
+Subtracting the reference equations from the numerical equations yields
+\begin{equation}\label{eq:velocity-error-stages}
+\begin{aligned}
+ e_{n,1}-e^n+\nu\eta\tau Ae_{n,1}
+      &=-\eta\tau\mathcal N_{n,1,0},\\
+ e_{n,2}-e_{n,1}
+      +\nu\tau[(1-2\eta)Ae_{n,1}+\eta Ae_{n,2}]
+      &=-\tau\sum_{j=0}^1\widehat a_{2j}\mathcal N_{n,2,j}
+         -\mathcal R_n.
+\end{aligned}
+\end{equation}
+The force samples cancel, and the sign of the residual follows from
+\cref{eq:reference-residual}.
+
+\emph{Nonlinear error estimates.}
+The velocity part of $\mathcal N_{n,i,j}$ decomposes as
+\[
+ B(u_{n,j},u_{n,j})-B(U_{n,j},U_{n,j})
+       =B(e_{n,j},u_{n,j})+B(U_{n,j},e_{n,j}).
+\]
+Move the derivative onto the test error by skew-symmetry. The uniform
+$V$ bounds on numerical and reference velocities and the two-dimensional
+$L^4$ interpolation inequality then give
+\[
+\begin{aligned}
+ &\left|\langle B(u_{n,j},u_{n,j})-B(U_{n,j},U_{n,j}),e_{n,i}\rangle\right|\\
+ &\qquad\le C_T|e_{n,j}|^{1/2}\|e_{n,j}\|^{1/2}\|e_{n,i}\|.
+\end{aligned}
+\]
+Two applications of Young's inequality control the current and old
+stage gradients with independently chosen positive coefficients.
+The remaining term satisfies, by
+\cref{eq:auxiliary-velocity-perturbation},
+$|\langle r_{n,i}^2B_{n,j},e_{n,i}\rangle|
+ \le C\tau^2\|e_{n,i}\|$.
+Consequently, for arbitrary $\varepsilon_1,\varepsilon_2>0$,
+\begin{equation}\label{eq:nonlinear-error-bound}
+ |\langle\mathcal N_{n,i,j},e_{n,i}\rangle|
+ \le\varepsilon_1\|e_{n,i}\|^2+\varepsilon_2\|e_{n,j}\|^2
+       +C_{T,\varepsilon_1,\varepsilon_2}|e_{n,j}|^2
+       +C_{T,\varepsilon_1}\tau^4.
+\end{equation}
+The old-stage gradient term is retained; it cannot be replaced by an
+$L^2$ error bound using only the available $H^1$ velocity bounds.
+
+\emph{Stage energy estimates.}
+Test the two equations in \cref{eq:velocity-error-stages} with
+$2e_{n,1}$ and $2e_{n,2}$, respectively, and add them.
+Polarization and \cref{eq:incremental-coercivity} give
+$|e^{n+1}|^2-|e^n|^2$, nonnegative increment terms, and at least
+$2\nu\lambda_I\tau(\|e_{n,1}\|^2+\|e^{n+1}\|^2)$ of dissipation.
+For any prescribed $b>0$, use \cref{eq:nonlinear-error-bound} with
+\[
+ \varepsilon_1=\frac{\nu\lambda_I}{4(2-\delta)},\qquad
+ \varepsilon_2=
+ \begin{cases}
+ b/[2(1+\eta)],&j=0,\\
+ \nu\lambda_I/[4(1-\delta)],&(i,j)=(2,1).
+ \end{cases}
+\]
+After multiplying by the actual weights $2\eta$, $2$, and
+$2(1-\delta)$, the old-node gradient coefficient is $b$.
+The first-stage gradient coefficient is at most $\nu\lambda_I$,
+and the second-stage coefficient is $\nu\lambda_I/2$.
+For the residual, Poincare's inequality and
+\cref{eq:reference-consistency-bounds} give
+\[
+ 2|(\mathcal R_n,e_{n,2})|
+ \le\frac{\nu\lambda_I}{2}\tau\|e^{n+1}\|^2
+       +\frac{2|\mathcal R_n|^2}{\nu\lambda_I\lambda_1\tau}
+ \le\frac{\nu\lambda_I}{2}\tau\|e^{n+1}\|^2+C_T\tau^5.
+\]
+Absorbing these terms and discarding the increments yields
+\begin{equation}\label{eq:velocity-error-energy}
+\begin{aligned}
+ |e^{n+1}|^2-|e^n|^2
+ &+\nu\lambda_I\tau(\|e_{n,1}\|^2+\|e^{n+1}\|^2)\\
+ &\le b\tau\|e^n\|^2
+       +C_{T,b}\tau(|e^n|^2+|e_{n,1}|^2)+C_{T,b}\tau^5.
+\end{aligned}
+\end{equation}
+Testing the first stage alone and taking
+$\varepsilon_1=\nu/2$, $\varepsilon_2=b_1/(2\eta)$ in
+\cref{eq:nonlinear-error-bound} gives, for any $b_1>0$,
+\begin{equation}\label{eq:first-stage-error}
+ |e_{n,1}|^2\le(1+C_{T,b_1}\tau)|e^n|^2
+                 +b_1\tau\|e^n\|^2+C_{T,b_1}\tau^5.
+\end{equation}
+Here a positive first-stage dissipation remains before it is discarded;
+no current-stage $L^2$ term needs to be moved to the left.
+
+\emph{A closed error-energy recurrence.}
+Fix $\vartheta=\nu\lambda_I/4$, take $b=\vartheta/2$ and
+$b_1=\vartheta$, and introduce
+\[
+ \mathcal E_n=|e^n|^2+\vartheta\tau\|e^n\|^2.
+\]
+Choose a common constant $C_T$ for
+\cref{eq:velocity-error-energy,eq:first-stage-error} at these fixed
+parameters. Then
+$|e_{n,1}|^2\le(1+C_T\tau)\mathcal E_n+C_T\tau^5$.
+Rewriting \cref{eq:velocity-error-energy} in terms of
+$\mathcal E_n$ leaves $(b-\vartheta)\tau\|e^n\|^2\le0$ on the
+right, while the new-node dissipation has coefficient
+$\nu\lambda_I-\vartheta=3\nu\lambda_I/4$.
+Substitution of the first-stage estimate, followed by
+$\tau\le\bar\tau$, therefore gives a fixed constant $K_T$ such that
+\begin{equation}\label{eq:closed-error-recurrence}
+ \mathcal E_{n+1}
+   +\frac{\nu\lambda_I}{2}\tau
+                         (\|e_{n,1}\|^2+\|e^{n+1}\|^2)
+ \le(1+K_T\tau)\mathcal E_n+K_T\tau^5.
+\end{equation}
+For example, $K_T=1+2C_T+C_T^2\bar\tau$ suffices.
+This is an explicit recurrence in the old error energy and introduces
+no additional small-step restriction.
+
+\emph{Finite-time iteration and stage-error recovery.}
+Exact initialization gives $\mathcal E_0=0$. For $N\tau\le T$,
+iteration of \cref{eq:closed-error-recurrence} without its dissipation
+implies
+\[
+ \mathcal E_N\le K_T\tau^5\sum_{k=0}^{N-1}(1+K_T\tau)^k
+       \le K_TT e^{K_TT}\tau^4.
+\]
+Keeping the dissipation and summing the same recurrence gives
+\[
+ \frac{\nu\lambda_I}{2}\tau
+       \sum_{n=0}^{N-1}\sum_{i=1}^2\|e_{n,i}\|^2
+ \le K_T\tau\sum_{n=0}^{N-1}\mathcal E_n+K_TN\tau^5
+ \le C_T\tau^4.
+\]
+Since $U_{n,2}=u(t_{n+1})$, the nodal part of
+\cref{eq:velocity-convergence} follows immediately.
+For the first stage,
+\[
+ u_{n,1}-u(t_n+\eta\tau)
+       =e_{n,1}+[U_{n,1}-u(t_n+\eta\tau)].
+\]
+The graph-norm estimate in \cref{eq:reference-consistency-bounds}
+controls the bracket in $V$ by $C_T\tau^2$. Thus
+\[
+ \tau\sum_{n=0}^{N-1}\sum_{i=1}^2
+       \|u_{n,i}-u(t_n+c_i\tau)\|^2
+ \le2\tau\sum_{n=0}^{N-1}\sum_{i=1}^2\|e_{n,i}\|^2
+       +C_T(N\tau)\tau^4
+ \le C_T\tau^4.
+\]
+Take $N=N_T$ and square roots to finish the proof. If $N_T=0$,
+the nodal error is zero and the stage sum is empty.
+\end{proof}
+
+The auxiliary-variable bound is uniform for all time, whereas the
+velocity convergence constant may grow with $T$. The stage estimate
+in \cref{eq:velocity-convergence} is a time-weighted $H^1$ estimate;
+it does not assert pointwise second-order $H^1$ convergence. The proof
+uses the numerical $H^1$ bound and $H^2$ window estimate, together with
+the separate exact-solution regularity in
+\cref{eq:exact-solution-regularity}. It does not require a
+step-size-independent pointwise $H^2$ bound on the numerical velocity.
+Pressure error estimates and variable-step convergence are not included
+in this theorem.
+
+\section{Conclusions}
+\label{sec:conclusions}
+
+Some conclusions here.
+
+
+\appendix
+\section{An example appendix} 
+\lipsum[71]
+
+\begin{lemma}
+Test Lemma.
+\end{lemma}
+
+
+\section*{Acknowledgments}
+We would like to acknowledge the assistance of volunteers in putting
+together this example manuscript and supplement.
+
+\bibliographystyle{siamplain}
+\bibliography{references}
+\end{document}
