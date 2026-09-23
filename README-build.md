@@ -31,7 +31,7 @@ done
 
 `.vscode/settings.json` 配置了：
 
-- 保存时自动编译；默认联合编译主文与补充材料。
+- 已关闭保存时自动编译；手动触发编译时，默认联合编译主文与补充材料。
 - 整个编译流程成功后，自动清理主文和补充材料的辅助文件（含 `.aux`、`.bbl`、`.blg`、`.log`、`.thm` 等）；失败时保留日志。PDF 与 `.synctex.gz` 保留，Skim 同步继续可用。清理后请使用默认联合编译流程重建双向引用；单文件 recipe 不会自动补建另一份文档的 `.aux`。此自动清理仅适用于 LaTeX Workshop，终端命令不触发。
 - 另一个 recipe `latexmk: current root (pdfLaTeX / BibTeX)` 用于独立编译当前根文件。
 - 使用 Skim 显示 PDF，编译后在后台同步到光标所在位置。

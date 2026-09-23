@@ -60,10 +60,7 @@ example, \LaTeX
 \end{MSCcodes}
 
 \section{Introduction}
-
-Let $\Omega\subset\mathbb R^2$ be a bounded connected domain with a
-$C^2$ boundary, and let $\nu>0$. We consider the incompressible
-Navier--Stokes equations (NSE)
+The incompressible Navier-Stokes equations (NSE) are a fundamental model of incompressible fluid flow and provide a canonical testbed for numerical methods designed for long-time simulations. Let $\Omega\subset\mathbb R^2$ be a bounded, connected domain with a $C^2$ boundary. We focus in this paper the forced incompressible NSE in dimensionless, subject to the no-slip boundary condition:
 \begin{equation}\label{eq:nse}
 \begin{aligned}
  u_t-\nu\Delta u+(u\cdot\nabla)u+\nabla p&=f
@@ -74,17 +71,18 @@ Navier--Stokes equations (NSE)
  u(\cdot,0)&=u_0 &&\text{in }\Omega.
 \end{aligned}
 \end{equation}
-The pressure is normalized by $\int_\Omega p\,dx=0$.
+Here, $u$ and $p$ denote the velocity and pressure, respectively, $\nu>0$ is the kinematic viscosity, $f$ is the external body force, and $u_0$ is the initial velocity. The pressure is normalized by requiring $\int_\Omega p(x,t)\,dx=0$ for each $t>0$.
 
-\subsection{Functional setting and uniform-in-time bounds}
-\label{sec:functional-setting}
+\section{Preliminaries and the mean reverting ccSAV reformulation of the NSE}
 
-Define $\mathcal V=\{v\in C_c^\infty(\Omega)^2:\nabla\cdot v=0\}$.
-Set
-\[
- H=\overline{\mathcal V}^{\,L^2(\Omega)^2},
- \qquad V=H_0^1(\Omega)^2\cap H.
-\]
+\subsection{Function space and notation}\label{sec:functional-setting}
+For the mathematical setting of the problem, we consider the following space
+\begin{equation}
+  \begin{aligned}
+ &V=\{v\in H_0^1(\Omega)^2: \nabla\cdot v=0\}, \\
+ &H=\{v \in L^2(\Omega)^2: \nabla \cdot v=0, v\cdot n = 0 \text{ on } \partial\Omega\}
+  \end{aligned}
+\end{equation}
 We write $(\cdot,\cdot)$ and $|\cdot|$ for the $L^2$ inner product and
 norm, and equip $V$ with the norm $\|v\|=|\nabla v|$.
 The pairing between $V'$ and $V$ is denoted by $\langle\cdot,\cdot\rangle$.
