@@ -1,8 +1,5 @@
 % !TeX root = ex_article.tex
-% SIAM Shared Information Template
-% This is information that is shared between the main document and any
-% supplement. If no supplement is required, then this information can
-% be included directly in the main document.
+% Shared packages, notation, and manuscript information.
 
 
 % Packages and macros go here
@@ -26,20 +23,32 @@
 \crefname{hypothesis}{Hypothesis}{Hypotheses}
 \newsiamthm{claim}{Claim}
 
-% Sets running headers as well as PDF title and authors
-\headers{An Example Article}{D. Doe, P. T. Frank, and J. E. Smith}
+% Short running headers for the article and supplement.
+\headers{SDIRK mr-ccSAV Schemes}
+        {H. Wang and X. Wang}
 
 % Title. If the supplement option is on, then "Supplementary Material"
 % is automatically inserted before the title.
-\title{An Example Article\thanks{Submitted to the editors DATE.
-\funding{This work was funded by the Fog Research Institute under contract no.~FRI-454.}}}
+\newcommand{\papertitle}{%
+  Long-Time Stability of SDIRK mr-ccSAV Schemes
+  for the Forced Two-Dimensional Navier--Stokes Equations
+  with No-Slip Boundary Conditions}
+\title{\papertitle}
 
 % Authors: full names plus addresses.
-\author{Dianne Doe\thanks{Imagination Corp., Chicago, IL 
-  (\email{ddoe@imag.com}, \url{http://www.imag.com/\string~ddoe/}).}
-\and Paul T. Frank\thanks{Department of Applied Mathematics, Fictional University, Boise, ID 
-  (\email{ptfrank@fictional.edu}, \email{jesmith@fictional.edu}).}
-\and Jane E. Smith\footnotemark[3]}
+\author{Haifeng Wang\thanks{%
+  School of Mathematical Sciences, Eastern Institute of Technology,
+  Ningbo, Zhejiang 315200, China
+  (\email{hfwang@eitech.edu.cn}, \email{wxm@eitech.edu.cn}).}
+  \and Xiaoming Wang\footnotemark[1]}
+
+% Keep PDF metadata consistent with the displayed manuscript information.
+\ifpdf
+\hypersetup{
+  pdftitle={\siampretitle\papertitle},
+  pdfauthor={Haifeng Wang and Xiaoming Wang}
+}
+\fi
 
 \usepackage{amsopn}
 \DeclareMathOperator{\diag}{diag}
