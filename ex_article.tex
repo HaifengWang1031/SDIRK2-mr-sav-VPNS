@@ -420,6 +420,79 @@ Stokes operator, allowing its factorization to be reused throughout the step.
 \end{remark}
 
 \subsection{Stagewise solvability}
+In this section, we first decouple each stage of \eqref{eq:sdirk-mr-ccsav} into two linear Stokes solves with a common operator and finding a real root of a scalar polynomial. Using this formulation, we establish the existence of stage solutions for arbitrary positive time steps and their uniqueness for sufficiently small time steps.
+
+For a stage $i \in \{1, \ldots, s\}$ and suppose that the previous stage values $(u_{n,j}, r_{n,j})$ for $j=0, \ldots, i-1$ are known. Define 
+$$
+\widetilde{F}_{n,i} := \sum_{j = 0}^{i-1} \widehat{a}_{ij} F_{n,j},\qquad
+\widetilde{B}_{n,i} := \sum_{j = 0}^{i-1} \widehat{a}_{ij} B_{n,j}.
+$$
+Then velocity equation at stage $i$ \eqref{eq:sdirk-mr-ccsav} can be rewritten as
+\begin{equation}\label{eq:stage-velocity}
+\left(I + \nu \tau_n a_{ii} A\right) u_{n,i} = R_{n,i}^{u} - \tau_n G_u(r_{n,i}) \widetilde{B}_{n,i}.
+\end{equation}
+where 
+$$
+R_{n,i}^{u} :=  u_{n,i-1} - \nu \tau_n \sum_{j=1}^{i-1} a_{ij}A u_{n,j} + \tau_n \widetilde{F}_{n,i}
+$$
+By \eqref{eq:stage-velocity}, for any given scalar trial value of $r$, the velocity value $u_{n,i}$ can be represented in the form 
+$$
+u_{n,i} = u_{n,i}^{(1)} - \tau_n G_u(r) u_{n,i}^{(2)}, 
+$$
+where $u_{n,i}^{(1)}$ and $u_{n,i}^{(2)}$ can be determined by the following two linear Stokes problems:
+\begin{equation}\label{eq:stage-linear-stokes}
+      (I + \nu \tau_n a_{ii} A) u_{n,i}^{(1)} = R_{n,i}^{u},\qquad
+      (I + \nu \tau_n a_{ii} A) u_{n,i}^{(2)} = \widetilde{B}_{n,i}.
+\end{equation}
+
+\begin{remark}
+For implementation, the two shifted Stokes problems in
+\eqref{eq:stage-linear-stokes} can be written in
+velocity--pressure form with no-slip boundary conditions as
+\begin{equation}\label{eq:stage-stokes-vp}
+u_{n,i}^{(\ell)}-\nu\tau_n a_{ii}\Delta u_{n,i}^{(\ell)}
+  +\nabla p_{n,i}^{(\ell)}
+=g_{n,i}^{(\ell)},\qquad
+\nabla\cdot u_{n,i}^{(\ell)}=0, \qquad \ell=1,2,
+\end{equation}
+where the known right-hand sides are
+\begin{equation*}
+g_{n,i}^{(1)} =u_{n,i-1}
+  +\nu\tau_n\sum_{j=1}^{i-1}a_{ij}\Delta u_{n,j}
+  +\tau_n\sum_{j=0}^{i-1}\widehat a_{ij}f_{n,j},\qquad
+g_{n,i}^{(2)} =\sum_{j=0}^{i-1}\widehat a_{ij}
+  (u_{n,j}\cdot\nabla)u_{n,j}.
+\end{equation*}
+Here $f_{n,j}$ denotes the unprojected stage force satisfying
+$\mathcal P f_{n,j}=F_{n,j}$. The pressure multipliers are normalized
+by $\int_\Omega p_{n,i}^{(\ell)}\,dx=0$.
+After spatial discretization, standard solvers for shifted
+Stokes systems can be used.
+Since all implicit diagonal entries are equal, the same discrete operator is used
+for both solves at every stage, allowing its factorization
+or preconditioner to be reused throughout each time step.
+\end{remark}
+
+To determine the stage value $r_{n,i}$, we substitute the above representation of $u_{n,i}$ into the scalar equation in \eqref{eq:sdirk-mr-ccsav} and obtain a polynomial equation for $r_{n,i}$:
+\begin{equation}\label{eq:stage-scalar}
+r_{n,i} - r_{n,i-1} + \gamma \tau_n \sum_{j=1}^{i} a_{ij} r_{n,j} + \tau_n G_r(r_{n,i}) \langle \widetilde{B}_{n,i}, u_{n,i}^{(1)} - \tau_n G_u(r_{n,i}) u_{n,i}^{(2)} \rangle = 0.
+\end{equation}
+Define the known scalar quantities
+$$
+R_{n,i}^{r} := r_{n,i-1} - \gamma \tau_n \sum_{j=1}^{i-1} a_{ij} r_{n,j},\quad \alpha_{n,i}:= \langle \widetilde{B}_{n,i}, u_{n,i}^{(1)} \rangle,\quad \beta_{n,i}:= \tau_n \langle \widetilde{B}_{n,i}, u_{n,i}^{(2)} \rangle.
+$$
+Then $r_{n,i}$ is determined by choosing a real root of the polynomial equation
+\begin{equation}\label{eq:stage-scalar-polynomial}
+      \mathcal{F}_{n,i}(r) := (1 + \gamma \tau_n a_{i,i})r + \tau_n G_r(r) (\alpha_{n,i} - G_u(r) \beta_{n,i}) - R_{n,i}^{r} = 0.
+\end{equation}
+which has degree at most $2k-1$. We should state here that the existence and the stability analysis below hold for any real root of \eqref{eq:stage-scalar-polynomial}. 
+
+
+
+
+\section{Uniform-in-time Stability}
+
+\section{Numerical Experiments}
 
 \section*{Acknowledgments}
 We would like to acknowledge the assistance of volunteers in putting
